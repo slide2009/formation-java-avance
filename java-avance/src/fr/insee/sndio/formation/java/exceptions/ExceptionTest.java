@@ -13,17 +13,20 @@ class ExceptionTest {
 		GestionException gestionException = new GestionException();
 		try {
 			gestionException.lireNombre(4);
-		} catch (LectureListeException e) {
+		} catch (MessageException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-//	@Test
-	void npeTest() {
-		mettreEnMajuscule("coucou");
-		mettreEnMajuscule(message);
-		mettreEnMajuscule("coucou2");
+	@Test
+	void npeTest()  {
+		try {
+			mettreEnMajuscule(message);
+		} catch (MessageException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 //	@Test
@@ -37,7 +40,7 @@ class ExceptionTest {
 		
 	}
 	
-	@Test
+//	@Test
 	void opttionalTest() {
 //		messageOptional.ifPresent(mesage -> System.out.println(message));
 		for(int i=0; i<10; i++) {
@@ -48,8 +51,14 @@ class ExceptionTest {
 		}
 	}
 	
-	public void mettreEnMajuscule(String message) {		
-		System.out.println(message.toUpperCase()); //on oublie de vérifier message != null
+	public void mettreEnMajuscule(String message) throws MessageException {		
+		try {			
+			System.out.println(message.toUpperCase()); //on oublie de vérifier message != null
+		}
+		catch (NullPointerException e) {
+			e.printStackTrace();
+			throw new MessageException(" Appel dans test.", e);
+		}
 	}
 	
 	private Optional< String> getMessage() {
