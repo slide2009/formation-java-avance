@@ -19,7 +19,7 @@ public class GestionException {
 		listeNombre.add(0);
 	}
 
-	public void lireNombre(int index) {
+	public void lireNombre(int index) throws LectureListeException {
 		try {			
 			System.out.println("Le nombre en position " + index + " est :  " + listeNombre.get(index));
 			System.out.println("Le résultat de l'index divisé par ce nombre :  " 
@@ -27,11 +27,9 @@ public class GestionException {
 		}
 		catch (IndexOutOfBoundsException | ArithmeticException e) {
 			e.printStackTrace();
+			throw new LectureListeException("gros problème : index : " +index , e);
 		}
-//		catch (ArithmeticException e) {
-//			e.printStackTrace();
-//		}
-		// éventuellement :
+		
 		finally {
 			System.out.println("Fin de l'exécution");
 		}	
