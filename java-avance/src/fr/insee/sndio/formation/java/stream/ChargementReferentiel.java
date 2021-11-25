@@ -27,30 +27,33 @@ public class ChargementReferentiel {
 					.map(this::parserLigneVoie)
 					.collect(Collectors.toMap(Voie::getId, Function.identity()));	
 			
-			List<Adresse> adresses = streamFichierAdresse
+			streamFichierAdresse
 				.skip(1)
-				.map(ligne -> {
-					Adresse adresse = new Adresse();
-					String [] split = ligne.split(";");
-					Voie voie = mapIdVoies.get(Long.valueOf(split[2]));
-					if(voie != null) {
-						adresse.setId(Long.valueOf(split[0]));
-						adresse.setDepcom(split[1]);
-						adresse.setNumero(Integer.valueOf(split[3]));
-						adresse.setSuffixe(split[4]);
-						adresse.setXy(split[5]);
-						voie.getAdresses().add(adresse);
-						adresse.setVoie(voie);
-					}						
-					return adresse;
-				})
-				.collect(Collectors.toList());
-			System.out.println(adresses.size());
+				.forEach(ligne -> parserLigneAdresse(mapIdVoies, ligne));
+				
 			voies = new ArrayList<>(mapIdVoies.values());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return voies;
+	}
+
+	private Adresse parserLigneAdresse(Map<Long, Voie> mapIdVoies, String ligne) {
+		Adresse adresse = new Adresse();
+		String [] split = ligne.split(";");
+		String idVoie = split[2];
+		Voie voie = mapIdVoies.get(Long.valueOf(idVoie));
+		if(voie != null) {
+			adresse.setId(Long.valueOf(split[0]));
+			adresse.setDepcom(split[1]);
+			adresse.setNumero(Integer.valueOf(split[3]));
+			adresse.setSuffixe(split[4]);
+			adresse.setXy(split[5]);
+			
+			voie.getAdresses().add(adresse);
+			adresse.setVoie(voie);
+		}						
+		return adresse;
 	}
 
 	/**
