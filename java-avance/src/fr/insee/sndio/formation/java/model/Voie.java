@@ -3,6 +3,11 @@ package fr.insee.sndio.formation.java.model;
 import java.util.HashSet;
 import java.util.Set;
 
+ /**
+  * Une voie rue, avenue
+  * @author KIVT18
+  *
+  */
 public class Voie {
 
 	private Long id;
