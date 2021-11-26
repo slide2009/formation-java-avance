@@ -19,7 +19,9 @@ public class ChargementFichier {
 		try (Stream<Path> streamDossier = Files.list(Paths.get("C:\\Users\\kivt18\\Documents\\data\\adresses"))) {
 			streamDossier
 			.filter(fichier -> !Files.isDirectory(fichier))
-			.forEach(pathFichier -> {
+			.forEach(
+					// Bloc à paraléliser
+					pathFichier -> {
 				try (Stream<String> streamFichier = Files.lines(pathFichier)) {
 					listeAdresses.addAll(
 						streamFichier
@@ -39,7 +41,10 @@ public class ChargementFichier {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			});
+			}
+					// Fin Bloc à paraléliser
+					
+					);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
