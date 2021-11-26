@@ -1,12 +1,10 @@
 package fr.insee.sndio.formation.java.multithreading;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -26,7 +24,7 @@ class ChargementFichierCallableTest {
 		try (Stream<Path> streamDossier = Files.list(Paths.get("C:\\Users\\kivt18\\Documents\\data\\adresses"))) {
 		System.out.println(Runtime.getRuntime().availableProcessors());
 			ThreadPoolExecutor executorService = (ThreadPoolExecutor) Executors.newFixedThreadPool(8);
-			List<Future<List<Adresse>>> futures = new ArrayList<>();
+			List<Future<List<Adresse>>> futures = new LinkedList<>();
 			
 			List<Path> listePathFichier = streamDossier
 			.filter(fichier -> !Files.isDirectory(fichier))
