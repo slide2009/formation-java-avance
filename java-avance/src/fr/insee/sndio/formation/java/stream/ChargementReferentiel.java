@@ -52,6 +52,8 @@ public class ChargementReferentiel {
 			
 			voie.getAdresses().add(adresse);
 			adresse.setVoie(voie);
+			
+//			System.out.println(adresse.getDepcom());
 		}						
 		return adresse;
 	}
